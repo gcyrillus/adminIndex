@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+   <title>adminIndex</title>
+   <author>GC-nomade</author>
+   <version>0.1</version>
+   <date>07/06/2022</date>
+    <site>http://re7net.com</site>
+    <repository>https://github.com/gcyrillus</repository>
+   <description>démo reprenant le tableau d'affichage des articles en y ajoutant les deux champs title_html_tag et meta_description .</description>
+</document>
