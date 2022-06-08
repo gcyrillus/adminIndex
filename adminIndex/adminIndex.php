@@ -23,51 +23,48 @@
         public function AdminIndexTop() {
 		
 
- global $plxAdmin;	
- 
-# Récuperation de l'id de l'utilisateur
-$userId = ($_SESSION['profil'] < PROFIL_WRITER ? '[0-9]{3}' : $_SESSION['user']);
-# Recherche du motif de sélection des articles en fonction des paramètres
-$catIdSel = '';
-$mod='';
-switch ($_SESSION['sel_get']) {
-case 'published':
-	$catIdSel = '[home|0-9,]*FILTER[home|0-9,]*';
-	$mod='';
-	break;
-case 'draft':
-	$catIdSel = '[home|0-9,]*draft,FILTER[home|0-9,]*';
-	$mod='_?';
-	break;
-case 'all':
-	$catIdSel = '[home|draft|0-9,]*FILTER[draft|home|0-9,]*';
-	$mod='_?';
-	break;
-case 'mod':
-	$catIdSel = '[home|draft|0-9,]*FILTER[draft|home|0-9,]*';
-	$mod='_';
-	break;
-}
+			global $plxAdmin;	
+	 
+			# Récuperation de l'id de l'utilisateur
+			$userId = ($_SESSION['profil'] < PROFIL_WRITER ? '[0-9]{3}' : $_SESSION['user']);
+			# Recherche du motif de sélection des articles en fonction des paramètres
+			$catIdSel = '';
+			$mod='';
+			switch ($_SESSION['sel_get']) {
+			case 'published':
+				$catIdSel = '[home|0-9,]*FILTER[home|0-9,]*';
+				$mod='';
+				break;
+			case 'draft':
+				$catIdSel = '[home|0-9,]*draft,FILTER[home|0-9,]*';
+				$mod='_?';
+				break;
+			case 'all':
+				$catIdSel = '[home|draft|0-9,]*FILTER[draft|home|0-9,]*';
+				$mod='_?';
+				break;
+			case 'mod':
+				$catIdSel = '[home|draft|0-9,]*FILTER[draft|home|0-9,]*';
+				$mod='_';
+				break;
+			}
 
-switch ($_SESSION['sel_cat']) {
-case 'all' :
-	$catIdSel = str_replace('FILTER', '', $catIdSel); break;
-case '000' :
-	$catIdSel = str_replace('FILTER', '000', $catIdSel); break;
-case 'home':
-	$catIdSel = str_replace('FILTER', 'home', $catIdSel); break;
-case preg_match('/^[0-9]{3}$/', $_SESSION['sel_cat'])==1:
-	$catIdSel = str_replace('FILTER', $_SESSION['sel_cat'], $catIdSel);
-}
-# Nombre d'article sélectionnés
-$nbArtPagination = $plxAdmin->nbArticles($catIdSel, $userId);
-$aFilterCat['all'] = L_ARTICLES_ALL_CATEGORIES;
+			switch ($_SESSION['sel_cat']) {
+			case 'all' :
+				$catIdSel = str_replace('FILTER', '', $catIdSel); break;
+			case '000' :
+				$catIdSel = str_replace('FILTER', '000', $catIdSel); break;
+			case 'home':
+				$catIdSel = str_replace('FILTER', 'home', $catIdSel); break;
+			case preg_match('/^[0-9]{3}$/', $_SESSION['sel_cat'])==1:
+				$catIdSel = str_replace('FILTER', $_SESSION['sel_cat'], $catIdSel);
+			}
+			# Nombre d'article sélectionnés
+			$nbArtPagination = $plxAdmin->nbArticles($catIdSel, $userId);
+			$aFilterCat['all'] = L_ARTICLES_ALL_CATEGORIES;
 
-$arts = $plxAdmin->getArticles('all'); # Recuperation des articles
-	?>
-
-
-
+			$arts = $plxAdmin->getArticles('all'); # Recuperation des articles
+		?>
 <div class="inline-form action-bar">
 	<h2><?php echo L_ARTICLES_LIST ?></h2>
 	<ul class="menu">
@@ -150,8 +147,8 @@ $arts = $plxAdmin->getArticles('all'); # Recuperation des articles
 				echo '<td>'.$idArt.'</td>';
 				echo '<td>'.plxDate::formatDate($plxAdmin->plxRecord_arts->f('date')).'&nbsp;</td>';
 				echo '<td style="width:auto;"><a href="article.php?a='.$idArt.'" title="'.L_ARTICLE_EDIT_TITLE.'">'.plxUtils::strCheck($plxAdmin->plxRecord_arts->f('title')).'</a>'.$draft.$awaiting.'&nbsp;</td>';
-				echo '<td>'.$plxAdmin->plxRecord_arts->f('title_htmltag').'&nbsp;</td>';
-				echo '<td>'.$plxAdmin->plxRecord_arts->f('meta_description').'&nbsp;</td>';
+				echo '<td>'.plxUtils::strCheck($plxAdmin->plxRecord_arts->f('title_htmltag')).'&nbsp;</td>';
+				echo '<td>'.plxUtils::strCheck($plxAdmin->plxRecord_arts->f('meta_description')).'&nbsp;</td>';
 				echo '<td>';
 				if(sizeof($aCats)>1) {
 					echo '<select name="sel_cat2" class="ddcat" onchange="this.form.sel_cat.value=this.value;this.form.submit()">';
@@ -170,7 +167,7 @@ $arts = $plxAdmin->getArticles('all'); # Recuperation des articles
 				echo "</tr>";
 			}
 		} else { # Pas d'article
-			echo '<tr><td colspan="8" class="center">'.L_NO_ARTICLE.'</td></tr>';
+			echo '<tr><td colspan="10" class="center">'.L_NO_ARTICLE.'</td></tr>';
 		}
 		?>
 		</tbody>
@@ -221,6 +218,6 @@ $arts = $plxAdmin->getArticles('all'); # Recuperation des articles
 eval($plxAdmin->plxPlugins->callHook('AdminIndexFoot'));
 # On inclut le footer
 include PLX_ROOT.'core/admin/foot.php';
-exit;
+exit;// on stoppe le script ici pour ne pas lancer à nouveau la fonction que nous venons juste de modifier, ni inclure une seconde fois le footer
         }
     }
