@@ -1,3 +1,4 @@
+<form action="index.php" method="post" id="form_articles">
 <div class="inline-form action-bar">
 	<h2><?php echo L_ARTICLES_LIST ?></h2>
 	<ul class="menu">
