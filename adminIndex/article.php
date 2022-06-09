@@ -1,4 +1,3 @@
-
 <div class="inline-form action-bar">
 	<h2><?php echo L_ARTICLES_LIST ?></h2>
 	<ul class="menu">
@@ -101,7 +100,7 @@
 				echo "</tr>";
 			}
 		} else { # Pas d'article
-			echo '<tr><td colspan="8" class="center">'.L_NO_ARTICLE.'</td></tr>';
+			echo '<tr><td colspan="10" class="center">'.L_NO_ARTICLE.'</td></tr>';
 		}
 		?>
 		</tbody>
@@ -153,3 +152,4 @@ eval($plxAdmin->plxPlugins->callHook('AdminIndexFoot'));
 # On inclut le footer
 include PLX_ROOT.'core/admin/foot.php';
 exit;
+?>
