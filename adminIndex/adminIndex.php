@@ -27,7 +27,7 @@
 			
             echo self::BEGIN_CODE;
 ?>			
-		 include(PLX_ROOT.'plugins/'.__CLASS__.'/article.php');
+		 include(PLX_ROOT.'plugins/adminIndex/article.php');
 <?php
             echo self::END_CODE;	
         }
